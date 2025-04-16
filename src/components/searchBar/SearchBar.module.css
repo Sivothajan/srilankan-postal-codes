@@ -16,6 +16,7 @@
   outline: none;
   transition: all 0.3s ease;
   box-sizing: border-box;
+  text-align: center;
 }
 
 .input:focus {
@@ -26,7 +27,7 @@
 .outputBox {
   position: absolute;
   top: 60px;
-  max-width: 550px;
+  max-width: 500px;
   width: 100%;
   left: 50%;
   transform: translateX(-50%);
@@ -40,6 +41,11 @@
   animation: slideIn 0.3s ease;
   box-sizing: border-box;
   overflow: hidden;
+  justify-content: center;
+}
+
+.outputBox li{
+  margin-left: 20%;
 }
 
 .resultsWrapper {
@@ -114,6 +120,40 @@
   }
 }
 
+@media (max-width: 480px) {
+  .input {
+    padding: 12px 16px;
+    font-size: 0.9rem;
+  }
+
+  .outputBox {
+    top: 50px;
+    max-width: 100%;
+    max-height: 200px;
+    padding: 8px 8px 8px 8px;
+  }
+
+  .outputBox li{
+    padding-left: 0;
+    margin-left: 0%;
+    margin-right: 8%;
+  }
+
+  .resultsWrapper {
+    max-height: 184px;
+  }
+
+  .resultItem {
+    padding: 8px 12px;
+    font-size: 0.9rem;
+  }
+
+  .noResults {
+    padding: 10px;
+    font-size: 0.9rem;
+  }
+}
+
 @media (max-width: 768px) {
   .input {
     padding: 12px 16px;
@@ -125,6 +165,10 @@
     max-width: 90%;
     max-height: 200px;
     padding: 8px 8px 8px 8px;
+  }
+
+  .outputBox li{
+    margin-left: 24%;
   }
 
   .resultsWrapper {
