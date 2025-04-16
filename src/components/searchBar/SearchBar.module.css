@@ -1,0 +1,143 @@
+.container {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.input {
+  width: 100%;
+  padding: 14px 20px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 50px;
+  background: #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  outline: none;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+}
+
+.input:focus {
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15), 0 0 0 3px #2196f3;
+  background: #f5f7fa;
+}
+
+.outputBox {
+  position: absolute;
+  top: 60px;
+  max-width: 550px;
+  width: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  max-height: 250px;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  z-index: 10;
+  padding: 10px 10px 10px 10px;
+  animation: slideIn 0.3s ease;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.resultsWrapper {
+  max-height: 230px;
+  overflow-y: auto;
+  border-radius: 8px;
+}
+
+.resultsWrapper::-webkit-scrollbar {
+  width: 8px;
+}
+
+.resultsWrapper::-webkit-scrollbar-track {
+  background: transparent;
+  border-radius: 8px;
+}
+
+.resultsWrapper::-webkit-scrollbar-thumb {
+  background: rgba(63, 81, 181, 0.5);
+  border-radius: 8px;
+}
+
+.resultsWrapper::-webkit-scrollbar-thumb:hover {
+  background: rgba(63, 81, 181, 0.7);
+}
+
+.resultsWrapper {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(63, 81, 181, 0.5) transparent;
+}
+
+.results {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.resultItem {
+  padding: 10px 14px;
+  font-size: 0.95rem;
+  color: #212121;
+  border-radius: 6px;
+  transition: 0.2s ease;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.resultItem:hover {
+  background: #e3f2fd;
+}
+
+.resultItem strong {
+  color: #3f51b5;
+  font-weight: 600;
+}
+
+.noResults {
+  padding: 12px;
+  font-size: 0.95rem;
+  color: #757575;
+  text-align: center;
+}
+
+@keyframes slideIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-10px) translateX(-50%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) translateX(-50%);
+  }
+}
+
+@media (max-width: 768px) {
+  .input {
+    padding: 12px 16px;
+    font-size: 0.9rem;
+  }
+
+  .outputBox {
+    top: 50px;
+    max-width: 90%;
+    max-height: 200px;
+    padding: 8px 8px 8px 8px;
+  }
+
+  .resultsWrapper {
+    max-height: 184px;
+  }
+
+  .resultItem {
+    padding: 8px 12px;
+    font-size: 0.9rem;
+  }
+
+  .noResults {
+    padding: 10px;
+    font-size: 0.9rem;
+  }
+}
