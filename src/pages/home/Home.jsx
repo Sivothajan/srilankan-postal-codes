@@ -12,11 +12,11 @@ function Home() {
           A project by:{" "}
           <a
             className={style.link}
-            href="https://senkanthal.org"
+            href="https://sivothajan.me#pcode"
             target="_blank"
             rel="noopener noreferrer"
           >
-            Senkanthal.org
+            Sivothajan
           </a>
         </p>
       </div>
