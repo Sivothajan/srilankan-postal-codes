@@ -1,63 +1,65 @@
-import { useState } from "react";
-import postalData from "../../assets/postal_data.json";
+import { useState, useRef, useCallback, useEffect } from "react";
 import style from "./SearchBar.module.css";
+import SearchResults from "./SearchResults";
+import SearchInput from "./SearchInput";
 
 function SearchBar() {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState([]);
+  const [postalData, setPostalData] = useState([]);
+  const searchTimeoutRef = useRef(null);
 
-  const handleSearch = (e) => {
-    const value = e.target.value;
-    setQuery(value);
+  // 🧠 Fetch JSON on first render
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await fetch("/assets/postal_data.json");
+        const data = await res.json();
+        setPostalData(data);
+      } catch (err) {
+        console.error("Failed to load postal data:", err);
+      }
+    };
 
-    if (value.trim() === "") {
-      setResults([]);
-      return;
-    }
+    fetchData();
+  }, []);
 
-    try {
-      const filtered = postalData.filter(
-        (item) =>
-          item.postal_code?.toString().includes(value) ||
-          item.post_office?.toLowerCase().includes(value.toLowerCase())
-      );
-      setResults(filtered);
-    } catch (error) {
-      console.error("Error filtering postal data:", error);
-      setResults([]);
-    }
-  };
+  // 🔍 Debounced search
+  const handleSearch = useCallback(
+    (e) => {
+      const value = e.target.value;
+      setQuery(value);
+
+      if (searchTimeoutRef.current) {
+        clearTimeout(searchTimeoutRef.current);
+      }
+
+      if (value.trim() === "") {
+        setResults([]);
+        return;
+      }
+
+      searchTimeoutRef.current = setTimeout(() => {
+        try {
+          const filtered = postalData.filter(
+            (item) =>
+              item.postal_code?.toString().includes(value) ||
+              item.post_office?.toLowerCase().includes(value.toLowerCase()),
+          );
+          setResults(filtered);
+        } catch (error) {
+          console.error("Error filtering postal data:", error);
+          setResults([]);
+        }
+      }, 150);
+    },
+    [postalData],
+  );
 
   return (
     <div className={style.container}>
-      <input
-        type="text"
-        className={style.input}
-        placeholder="Search for postal codes or locations..."
-        value={query}
-        onChange={handleSearch}
-        aria-label="Search postal codes or locations"
-      />
-      {query.trim() !== "" && (
-        <div className={style.outputBox}>
-          <div className={style.resultsWrapper}>
-            {results.length > 0 ? (
-              <ul className={style.results}>
-                {results.map((item, index) => (
-                  <li
-                    key={`${item.postal_code}-${index}`}
-                    className={style.resultItem}
-                  >
-                    <strong>{item.postal_code}</strong> - {item.post_office}
-                  </li>
-                ))}
-              </ul>
-            ) : (
-              <div className={style.noResults}>No results found.</div>
-            )}
-          </div>
-        </div>
-      )}
+      <SearchInput query={query} onChange={handleSearch} />
+      {query.trim() !== "" && <SearchResults results={results} />}
     </div>
   );
 }
